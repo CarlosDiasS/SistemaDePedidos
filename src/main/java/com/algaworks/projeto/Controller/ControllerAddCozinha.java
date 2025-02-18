@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.algaworks.projeto.Service.CreateCozinhaService;
+import com.algaworks.projeto.domain.service.CreateCozinhaService;
 import com.algaworks.projeto.model.entity.CozinhaEntity;
 
 @RestController

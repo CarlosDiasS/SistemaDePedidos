@@ -1,4 +1,4 @@
-package com.algaworks.projeto.Service;
+package com.algaworks.projeto.domain.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

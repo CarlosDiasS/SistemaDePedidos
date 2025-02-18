@@ -2,6 +2,7 @@ package com.algaworks.projeto.Controller;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -14,11 +15,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.algaworks.projeto.domain.service.AdicionarCozinhaService;
+import com.algaworks.projeto.domain.service.CozinhaService;
 import com.algaworks.projeto.domain.service.ListarService;
-import com.algaworks.projeto.domain.service.RemoverCozinhaService;
 import com.algaworks.projeto.model.entity.CozinhaEntity;
 import com.algaworks.projeto.model.entity.RestauranteEntity;
+
+import jakarta.persistence.EntityNotFoundException;
 
 @RestController
 @RequestMapping(value = "/querys")
@@ -29,10 +31,7 @@ public class ControllerQuery {
 	private ListarService listarRestaurantesService;
 
 	@Autowired
-	private AdicionarCozinhaService adicionarCozinhaService;
-
-	@Autowired
-	private RemoverCozinhaService removerCozinhaService;
+	private CozinhaService cozinhaService;
 
 	@Autowired
 	private ListarService listarService;
@@ -43,45 +42,42 @@ public class ControllerQuery {
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<Optional<CozinhaEntity>> filtro(@PathVariable Long id) {
-		return null;
+	public CozinhaEntity filtroCozinha(@PathVariable UUID id) {
+		return cozinhaService.cozinhaById(id).orElseThrow(() -> new EntityNotFoundException("cozinha não encontrada"));
 	}
 
 	@DeleteMapping("/remover/{id}")
-	public String removerCozinha(@PathVariable Long id) {
-		return removerCozinhaService.remover(id);
+	public ResponseEntity<Void> removerCozinha(@PathVariable UUID id) {
+		cozinhaService.remover(id);
+		return ResponseEntity.noContent().build();
 	}
 
 	@PostMapping
 	public ResponseEntity<CozinhaEntity> adicionarCozinha(@RequestBody CozinhaEntity cozinhaEntity) {
-		return adicionarCozinhaService.adicionar(cozinhaEntity);
+		return cozinhaService.adicionar(cozinhaEntity);
 	}
 
 	@GetMapping("/restaurantes")
 	public List<RestauranteEntity> listarRestaurantes() {
 		return listarService.restaurantes();
 	}
-	
+
 	@GetMapping("/restaurantes/{id}")
-	public Optional<RestauranteEntity> filtroId(@PathVariable Long id){
-		return listarRestaurantesService.restaurante(id);
+	public RestauranteEntity filtroId(@PathVariable UUID id) {
+		return listarRestaurantesService.restaurante(id)
+				.orElseThrow(() -> new EntityNotFoundException("estado não encontrado"));
 	}
-	
-	
+
 	@GetMapping("/cozinhas")
 	public List<CozinhaEntity> cozinhas() {
 		return listarService.cozinhas();
 
 	}
-	
-//	@GetMapping("/filtro-cozinhas")
-//	public List<RestauranteEntity> restaurantesComFreteGratisSpec(String nome){
-//		var FreteGratis = new RestauranteComFreteGratisSpec();
-//		var comNomeEqual = new RestauranteComNomeEqual(nome);
-//		return RestauranteRepository.(FreteGratis.and(comNomeEqual));
-//	}
-	
-	
+
+	@GetMapping("/cozinhas/{id}")
+	public CozinhaEntity cozinhaById(UUID id){
+		return cozinhaService.filtroId(id);
+	}
 	
 
 }

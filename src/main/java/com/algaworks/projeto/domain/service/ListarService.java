@@ -2,12 +2,10 @@ package com.algaworks.projeto.domain.service;
 
 import java.util.List;
 import java.util.Optional;
-
-import javax.swing.plaf.BorderUIResource.EmptyBorderUIResource;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -30,7 +28,7 @@ public class ListarService {
 
 	}
 
-	public Optional<RestauranteEntity> restaurante(long id) {
+	public Optional<RestauranteEntity> restaurante(UUID id) {
 		try {
 			return restauranteRepository.findById(id);
 		} catch (EmptyResultDataAccessException e) {
