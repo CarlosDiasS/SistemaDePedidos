@@ -20,8 +20,6 @@ import com.algaworks.projeto.domain.service.ListarService;
 import com.algaworks.projeto.model.entity.CozinhaEntity;
 import com.algaworks.projeto.model.entity.RestauranteEntity;
 
-import jakarta.persistence.EntityNotFoundException;
-
 @RestController
 @RequestMapping(value = "/querys")
 
@@ -43,7 +41,7 @@ public class ControllerQuery {
 
 	@GetMapping("/{id}")
 	public CozinhaEntity filtroCozinha(@PathVariable UUID id) {
-		return cozinhaService.cozinhaById(id).orElseThrow(() -> new EntityNotFoundException("cozinha não encontrada"));
+		return cozinhaService.cozinhaById(id);
 	}
 
 	@DeleteMapping("/remover/{id}")
@@ -64,8 +62,8 @@ public class ControllerQuery {
 
 	@GetMapping("/restaurantes/{id}")
 	public RestauranteEntity filtroId(@PathVariable UUID id) {
-		return listarRestaurantesService.restaurante(id)
-				.orElseThrow(() -> new EntityNotFoundException("estado não encontrado"));
+		return listarRestaurantesService.restaurante(id);
+
 	}
 
 	@GetMapping("/cozinhas")
@@ -73,11 +71,5 @@ public class ControllerQuery {
 		return listarService.cozinhas();
 
 	}
-
-	@GetMapping("/cozinhas/{id}")
-	public CozinhaEntity cozinhaById(UUID id){
-		return cozinhaService.filtroId(id);
-	}
-	
 
 }

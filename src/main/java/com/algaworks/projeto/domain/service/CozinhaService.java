@@ -1,6 +1,5 @@
 package com.algaworks.projeto.domain.service;
 
-import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,8 +27,8 @@ public class CozinhaService {
 		return ResponseEntity.status(HttpStatus.CREATED).body(novaCozinha);
 	}
 
-	public Optional<CozinhaEntity> cozinhaById(@RequestParam UUID id) {
-		return cozinhaRepository.findById(id);
+	public CozinhaEntity cozinhaById(@RequestParam UUID id) {
+		return cozinhaRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("cozinha não encontrada"));
 	}
 
 	public void remover(@PathVariable UUID id) {
@@ -37,8 +36,5 @@ public class CozinhaService {
 		System.err.println("Cozinha deletada " + id);
 	}
 
-	public CozinhaEntity filtroId(UUID id) {
-		return cozinhaRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("cozinha nao encontrada"));
-	}
 
 }

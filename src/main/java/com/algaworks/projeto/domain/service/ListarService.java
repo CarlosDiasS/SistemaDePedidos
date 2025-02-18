@@ -5,7 +5,6 @@ import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -13,6 +12,8 @@ import com.algaworks.projeto.model.entity.CozinhaEntity;
 import com.algaworks.projeto.model.entity.RestauranteEntity;
 import com.algaworks.projeto.model.repository.CozinhaRepository;
 import com.algaworks.projeto.model.repository.RestauranteRepository;
+
+import jakarta.persistence.EntityNotFoundException;
 
 @Service
 public class ListarService {
@@ -28,13 +29,9 @@ public class ListarService {
 
 	}
 
-	public Optional<RestauranteEntity> restaurante(UUID id) {
-		try {
-			return restauranteRepository.findById(id);
-		} catch (EmptyResultDataAccessException e) {
-			System.out.printf("restaurante de id %d inexistente", id);
-			return Optional.empty();
-		}
+	public RestauranteEntity restaurante(UUID id) {
+		return restauranteRepository.findById(id)
+				.orElseThrow(() -> new EntityNotFoundException("estado não encontrado"));
 	}
 
 	public List<CozinhaEntity> cozinhas() {
