@@ -37,10 +37,9 @@ public class ControllerEstado {
 	public EstadoEntity findById(@PathVariable UUID id) {
 		return estadoRepository.findById(id).
 				orElseThrow(() -> new EntityNotFoundException("estado não encontrado"));
-
 	}
 
-	@GetMapping("/{id}/cidades")
+	@GetMapping("/cidades/{id}")
 	public CidadeEntity findCidadesByEstado(@RequestBody EstadoEntity estado) {
 		return cidadeRepository.findByEstado(estado)
 				.orElseThrow(() -> new EntityNotFoundException("estado não encontrado"));

@@ -26,9 +26,6 @@ import com.algaworks.projeto.model.entity.RestauranteEntity;
 public class ControllerQuery {
 
 	@Autowired
-	private ListarService listarRestaurantesService;
-
-	@Autowired
 	private CozinhaService cozinhaService;
 
 	@Autowired
@@ -39,7 +36,12 @@ public class ControllerQuery {
 		return listarService.query(nome);
 	}
 
-	@GetMapping("/{id}")
+	@GetMapping("/cozinhas")
+	public List<CozinhaEntity> cozinhas() {
+		return listarService.cozinhas();
+	}
+
+	@GetMapping("/cozinhas/{id}")
 	public CozinhaEntity filtroCozinha(@PathVariable UUID id) {
 		return cozinhaService.cozinhaById(id);
 	}
@@ -62,14 +64,7 @@ public class ControllerQuery {
 
 	@GetMapping("/restaurantes/{id}")
 	public RestauranteEntity filtroId(@PathVariable UUID id) {
-		return listarRestaurantesService.restaurante(id);
-
-	}
-
-	@GetMapping("/cozinhas")
-	public List<CozinhaEntity> cozinhas() {
-		return listarService.cozinhas();
-
+		return listarService.restaurante(id);
 	}
 
 }
