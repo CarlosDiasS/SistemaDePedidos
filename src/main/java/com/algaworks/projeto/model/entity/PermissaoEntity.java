@@ -1,6 +1,7 @@
 package com.algaworks.projeto.model.entity;
 
 import java.util.Set;
+import java.util.UUID;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -18,7 +19,7 @@ public class PermissaoEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
+	private UUID id;
 
 	@Column(nullable = false)
 	private String nome;
