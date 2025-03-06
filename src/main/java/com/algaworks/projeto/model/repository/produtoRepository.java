@@ -5,12 +5,11 @@ import java.util.UUID;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.algaworks.projeto.model.entity.RestauranteEntity;
-import com.algaworks.projeto.model.entity.produtoEntity;
+import com.algaworks.projeto.model.entity.ProdutoEntity;
 
-public interface produtoRepository extends JpaRepository<produtoEntity, UUID>{
+public interface ProdutoRepository extends JpaRepository<ProdutoEntity, UUID>{
 
-	Optional<produtoEntity> findByNome(String nome);
+	Optional<ProdutoEntity> findByNome(String nome);
 	
 	
 	

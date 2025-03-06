@@ -17,6 +17,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
 @Data
@@ -28,6 +29,7 @@ public class RestauranteEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
     
+    @NotBlank
     @Column(nullable = false)
     private String nome;
     
@@ -43,7 +45,7 @@ public class RestauranteEntity {
     private LocalDateTime dataUpdate;
     
     @OneToMany(mappedBy = "restaurante")
-    private List<produtoEntity> produtos;
+    private List<ProdutoEntity> produtos;
     
     @ManyToOne
     @JoinColumn(name = "cozinha_id", nullable= false)

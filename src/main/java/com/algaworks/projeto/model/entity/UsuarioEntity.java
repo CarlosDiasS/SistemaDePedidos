@@ -13,6 +13,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
 @Data
@@ -22,22 +24,26 @@ public class UsuarioEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private UUID id;
-	
-	@Column
+
+	@NotBlank
+	@Column(nullable = false)
 	private String nome;
-	
-	@Column 
+
+	@Email
+	@NotBlank
+	@Column(nullable = false)
 	private String email;
-	
-	@Column
+
+	@NotBlank
+	@Column(nullable = false)
 	private String senha;
-	
+
 	@Column
 	@CreationTimestamp
 	private LocalDateTime dataCadastro;
-	
+
 	@ManyToMany
 	@JoinTable(name = "grupo")
 	private Set<GrupoEntity> grupo;
-	
+
 }

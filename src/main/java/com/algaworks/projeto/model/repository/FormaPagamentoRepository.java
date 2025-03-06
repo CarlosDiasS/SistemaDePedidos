@@ -9,6 +9,6 @@ import com.algaworks.projeto.model.entity.FormaPagamentoEntity;
 
 public interface FormaPagamentoRepository extends JpaRepository<FormaPagamentoEntity, UUID> {
 
-	Optional<FormaPagamentoEntity> findByNome(String nome);
+	Optional<FormaPagamentoEntity> findByDescricao(String descricao);
 	
 }
