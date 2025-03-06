@@ -5,8 +5,8 @@ import org.springframework.stereotype.Component;
 
 import com.algaworks.projeto.model.entity.ProdutoEntity;
 
+import dto.ProdutoInputDto;
 import lombok.AllArgsConstructor;
-import model.dto.ProdutoInputDto;
 
 @Component
 @AllArgsConstructor

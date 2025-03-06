@@ -23,11 +23,12 @@ import com.algaworks.projeto.model.entity.RestauranteEntity;
 import Mappers.CozinhaMapper;
 import Mappers.ProdutoMapper;
 import Mappers.RestauranteMapper;
+import dto.CozinhaInputDto;
+import dto.ProdutoInputDto;
+import dto.RestauranteInputDto;
+import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
-import model.dto.CozinhaInputDto;
-import model.dto.ProdutoInputDto;
-import model.dto.RestauranteInputDto;
 
 @RestController
 @RequestMapping(value = "/restaurantes")
@@ -66,6 +67,7 @@ public class RestauranteController {
 	}
 
 	@PostMapping("/cozinha/novo")
+	@Transactional
 	public ResponseEntity<CozinhaEntity> adicionarCozinha(@RequestBody @Valid CozinhaInputDto dto) {
 		CozinhaEntity entity = cozinhaMapper.toEntity(dto);
 		return restauranteService.AdicionarCozinha(entity);
@@ -87,20 +89,23 @@ public class RestauranteController {
 	}
 
 	@PostMapping("/restaurantes/novo")
-	public ResponseEntity<?> CriarRestaurante(@RequestBody @Valid RestauranteInputDto dto) {
+	@Transactional
+	public ResponseEntity<?> criarRestaurante(@RequestBody @Valid RestauranteInputDto dto) {
 		try {
 			RestauranteEntity entity = restauranteMapper.toEntity(dto);
 			entity.setCozinha(filtroCozinha(dto.getCozinhaId()));
 			entity.setFormaPagamento(getFormaPg(dto.getFormaPagamentoId()));
 			RestauranteEntity novoRestaurante = restauranteService.AdicionarRestaurante(entity);
 			return ResponseEntity.status(HttpStatus.CREATED).body(novoRestaurante);
-		} catch (Exception e) {
+		} catch (IllegalArgumentException e) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro interno ao criar restaurante.");
 		}
-
 	}
 
 	@PostMapping("/produtos/novo")
+	@Transactional
 	public ResponseEntity<?> CadastroProduto(@RequestBody @Valid ProdutoInputDto dto) {
 
 		try {
@@ -111,7 +116,6 @@ public class RestauranteController {
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
 		}
-
 	}
 
 }

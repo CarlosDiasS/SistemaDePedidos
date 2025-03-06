@@ -1,4 +1,4 @@
-package model.dto;
+package dto;
 
 import Utils.EnumCategoria;
 import jakarta.validation.constraints.NotBlank;

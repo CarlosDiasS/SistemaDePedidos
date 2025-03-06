@@ -16,7 +16,7 @@ import com.algaworks.projeto.domain.service.ServiceProjeto;
 import com.algaworks.projeto.model.entity.UsuarioEntity;
 
 import Mappers.UsuarioMapper;
-import model.dto.UsuarioInputDto;
+import dto.UsuarioInputDto;
 
 @Controller
 public class UsuarioController {

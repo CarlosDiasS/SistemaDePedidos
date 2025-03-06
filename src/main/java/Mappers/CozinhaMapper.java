@@ -5,8 +5,8 @@ import org.springframework.stereotype.Component;
 
 import com.algaworks.projeto.model.entity.CozinhaEntity;
 
+import dto.CozinhaInputDto;
 import lombok.AllArgsConstructor;
-import model.dto.CozinhaInputDto;
 @Component
 @AllArgsConstructor
 public class CozinhaMapper {
