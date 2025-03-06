@@ -42,5 +42,7 @@ public class UsuarioController {
 	public void DeleteById(@PathVariable UUID id) {
 		 serviceProjeto.DeleteById(id);
 	}
+	
+	
 
 }

@@ -7,7 +7,6 @@ import com.algaworks.projeto.model.entity.CozinhaEntity;
 
 import lombok.AllArgsConstructor;
 import model.dto.CozinhaInputDto;
-
 @Component
 @AllArgsConstructor
 public class CozinhaMapper {

@@ -1,5 +1,7 @@
 package com.algaworks.projeto.domain.service;
 
+import java.security.MessageDigest;
+import java.util.HexFormat;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -55,12 +57,28 @@ public class ServiceProjeto {
 		}
 		return aux;
 	}
+	
+	public String CodificacaoSha256(String input) {
+		try{
+			MessageDigest digest = MessageDigest.getInstance("SHA-256");
+			byte[] hash = digest.digest(input.getBytes());
+			return HexFormat.of().formatHex(hash);
+		}catch (Exception e) {
+			throw new RuntimeException("Erro ao codificar a senha com SHA-256.",e);
+		}
+	}
 
 	public ResponseEntity<UsuarioEntity> CadastroUsuario(UsuarioEntity usuario) {
-		UsuarioEntity aux = usuarioRepository.saveAndFlush(usuario);
+		
+		String password = usuario.getSenha();
+		UsuarioEntity novo = new UsuarioEntity();
+		novo.setSenha(CodificacaoSha256(password));
+		novo.setDataCadastro(usuario.getDataCadastro());
+		novo.setEmail(usuario.getEmail());
+		novo.setNome(usuario.getNome());
+		novo.setGrupo(usuario.getGrupo());
+		UsuarioEntity aux = usuarioRepository.saveAndFlush(novo);
 		return ResponseEntity.status(HttpStatus.CREATED).body(aux);
-		// add tratativa para senha
-
 	}
 
 	public UsuarioEntity GetUsuarioByName(String nome) {

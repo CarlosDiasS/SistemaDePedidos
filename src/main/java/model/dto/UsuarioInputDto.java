@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 import com.algaworks.projeto.model.entity.GrupoEntity;
 
 import jakarta.persistence.ManyToMany;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 
@@ -20,9 +21,10 @@ public class UsuarioInputDto {
 	private String nome;
 	
 	@NotBlank 
+	@Email
 	private String email;
 	
-	@NotBlank 
+	@NotBlank
 	private String senha;
 	
 	@NotBlank

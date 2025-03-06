@@ -17,10 +17,8 @@ import com.algaworks.projeto.model.repository.FormaPagamentoRepository;
 import com.algaworks.projeto.model.repository.ProdutoRepository;
 import com.algaworks.projeto.model.repository.RestauranteRepository;
 
-import io.micrometer.common.util.StringUtils;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
-import jakarta.validation.constraints.Null;
 
 @Service
 public class RestauranteService {
@@ -97,6 +95,11 @@ public class RestauranteService {
 
 	public void RemoverCozinha(UUID id) {
 		cozinhaRepository.deleteById(id);
+	}
+
+	@Transactional
+	public ProdutoEntity adicionarProduto(ProdutoEntity entity) {
+		return produtoRepository.saveAndFlush(entity);
 	}
 
 }

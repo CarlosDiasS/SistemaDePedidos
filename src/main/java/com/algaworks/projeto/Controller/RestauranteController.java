@@ -17,17 +17,20 @@ import com.algaworks.projeto.domain.service.RestauranteService;
 import com.algaworks.projeto.domain.service.ServiceProjeto;
 import com.algaworks.projeto.model.entity.CozinhaEntity;
 import com.algaworks.projeto.model.entity.FormaPagamentoEntity;
+import com.algaworks.projeto.model.entity.ProdutoEntity;
 import com.algaworks.projeto.model.entity.RestauranteEntity;
 
 import Mappers.CozinhaMapper;
+import Mappers.ProdutoMapper;
 import Mappers.RestauranteMapper;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import model.dto.CozinhaInputDto;
+import model.dto.ProdutoInputDto;
 import model.dto.RestauranteInputDto;
 
 @RestController
-@RequestMapping(value = "/restaurante")
+@RequestMapping(value = "/restaurantes")
 @AllArgsConstructor
 public class RestauranteController {
 
@@ -38,6 +41,8 @@ public class RestauranteController {
 	private CozinhaMapper cozinhaMapper;
 
 	private RestauranteMapper restauranteMapper;
+
+	private ProdutoMapper produtoMapper;
 
 	@GetMapping("/cozinhas")
 	public List<CozinhaEntity> cozinhas() {
@@ -89,6 +94,20 @@ public class RestauranteController {
 			entity.setFormaPagamento(getFormaPg(dto.getFormaPagamentoId()));
 			RestauranteEntity novoRestaurante = restauranteService.AdicionarRestaurante(entity);
 			return ResponseEntity.status(HttpStatus.CREATED).body(novoRestaurante);
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+		}
+
+	}
+
+	@PostMapping("/produtos/novo")
+	public ResponseEntity<?> CadastroProduto(@RequestBody @Valid ProdutoInputDto dto) {
+
+		try {
+			ProdutoEntity entity = produtoMapper.toEntity(dto);
+			entity.setAtivo(true);
+			ProdutoEntity novo = restauranteService.adicionarProduto(entity);
+			return ResponseEntity.status(HttpStatus.CREATED).body(novo);
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
 		}
