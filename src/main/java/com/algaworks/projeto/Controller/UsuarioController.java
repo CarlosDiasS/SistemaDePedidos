@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import com.algaworks.projeto.domain.service.ServiceProjeto;
+import com.algaworks.projeto.model.entity.FormaPagamentoEntity;
 import com.algaworks.projeto.model.entity.UsuarioEntity;
 
 import Mappers.UsuarioMapper;
@@ -49,5 +50,13 @@ public class UsuarioController {
 	public Boolean VerificarSenha(@RequestBody @Valid ComboBoxUsuarioDto dto) {
 		return serviceProjeto.VerificarHash(dto.getSenha(), dto.getId());
 	}
+	
+	@PostMapping("/forma-pagamento/novo/{pg}")
+	public ResponseEntity<FormaPagamentoEntity> CriarFormaPg(@PathVariable String pg ){
+		return serviceProjeto.CadastrarFormaPg(pg);
+		
+	}
+	
+	
 
 }

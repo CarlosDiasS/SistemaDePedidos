@@ -114,6 +114,15 @@ public class ServiceProjetoImpl implements ServiceProjeto {
 				.orElseThrow(() -> new EntityNotFoundException("Forma de pagamento nao encontrado"));
 	}
 
+	@Override
+	public ResponseEntity<FormaPagamentoEntity> CadastrarFormaPg(String pg) {
+
+		FormaPagamentoEntity aux = new FormaPagamentoEntity();
+		aux.setDescricao(pg);
+		formaPagamentoRepository.saveAndFlush(aux);
+		return ResponseEntity.status(HttpStatus.CREATED).body(aux);
+	}
+
 	// imp autenticacao
 
 }
