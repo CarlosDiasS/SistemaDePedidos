@@ -55,7 +55,7 @@ public class RestauranteController {
 		return restauranteService.GetCozinhaById(id);
 	}
 
-	@GetMapping("/cozinhas/{nome}")
+	@GetMapping("/cozinhas/filtro/{nome}")
 	public CozinhaEntity CozinhaByNome(@PathVariable String nome) {
 		return restauranteService.GetCozinhaByNome(nome);
 	}
@@ -105,17 +105,27 @@ public class RestauranteController {
 	}
 
 	@PostMapping("/produtos/novo")
-	@Transactional
 	public ResponseEntity<?> CadastroProduto(@RequestBody @Valid ProdutoInputDto dto) {
 
 		try {
 			ProdutoEntity entity = produtoMapper.toEntity(dto);
 			entity.setAtivo(true);
 			ProdutoEntity novo = restauranteService.adicionarProduto(entity);
+
+			RestauranteEntity aux = RestauranteById(dto.getRestauranteId());
+			if (aux == null) {
+				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Restaurante não encontrado.");
+			}
+			novo.setRestaurante(aux);
 			return ResponseEntity.status(HttpStatus.CREATED).body(novo);
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
 		}
+	}
+
+	@GetMapping("/produtos/{id}")
+	public List<ProdutoEntity> getProdutosByRestaurante(@PathVariable UUID id) {
+		return restauranteService.ProdutosByRestaurante(id);
 	}
 
 }

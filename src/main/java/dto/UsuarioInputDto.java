@@ -11,11 +11,12 @@ import jakarta.persistence.ManyToMany;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
+import lombok.Data;
 
 @Component
 @AllArgsConstructor
+@Data
 public class UsuarioInputDto {
-
 	
 	@NotBlank
 	private String nome;

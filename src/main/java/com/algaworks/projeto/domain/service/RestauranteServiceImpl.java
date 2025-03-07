@@ -1,6 +1,7 @@
 package com.algaworks.projeto.domain.service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -114,6 +115,21 @@ public class RestauranteServiceImpl implements RestauranteService {
 	@Transactional
 	public ProdutoEntity adicionarProduto(ProdutoEntity entity) {
 		return produtoRepository.saveAndFlush(entity);
+	}
+
+	@Override
+	public List<ProdutoEntity> ProdutosByRestaurante(UUID restauranteId) {
+		try {
+			Optional<RestauranteEntity> restauranteOptional = restauranteRepository.findById(restauranteId);
+
+			if (!restauranteOptional.isPresent()) {
+				throw new Exception("Restaurante inexistente");
+			}
+			return produtoRepository.findByRestaurante(restauranteOptional.get());
+
+		} catch (Exception e) {
+			throw new RuntimeException("Erro ao buscar produtos do restaurante: " + e.getMessage(), e);
+		}
 	}
 
 }

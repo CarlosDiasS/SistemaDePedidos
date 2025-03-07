@@ -1,6 +1,7 @@
 package dto;
 
 import java.math.BigDecimal;
+import java.util.UUID;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -14,6 +15,9 @@ public class ProdutoInputDto {
 
 	@NotNull
 	private BigDecimal preco;
+	
+	@NotBlank
+	private UUID restauranteId;
 
 	
 }

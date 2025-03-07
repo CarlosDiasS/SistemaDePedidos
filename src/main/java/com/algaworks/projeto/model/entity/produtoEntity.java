@@ -3,6 +3,8 @@ package com.algaworks.projeto.model.entity;
 import java.math.BigDecimal;
 import java.util.UUID;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -33,6 +35,7 @@ public class ProdutoEntity {
 
 	@ManyToOne
 	@JoinColumn(name = "restaurante", nullable = false)
+	@JsonIgnore
 	private RestauranteEntity restaurante;
 
 }

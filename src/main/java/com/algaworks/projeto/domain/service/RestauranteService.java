@@ -39,5 +39,7 @@ public interface RestauranteService {
 	void RemoverCozinha(UUID id);
 
 	ProdutoEntity adicionarProduto(ProdutoEntity entity);
+	
+	public List<ProdutoEntity>ProdutosByRestaurante(UUID restauranteid);
 
 }

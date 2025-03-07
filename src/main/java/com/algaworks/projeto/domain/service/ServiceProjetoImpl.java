@@ -72,7 +72,9 @@ public class ServiceProjetoImpl implements ServiceProjeto {
 			throw new RuntimeException("Erro ao codificar a senha com SHA-256.",e);
 		}
 	}
-
+	
+	//estudar implementação de token, possibilitando o acesso a senha do banco 
+	
 	@Override
 	public ResponseEntity<UsuarioEntity> CadastroUsuario(UsuarioEntity usuario) {
 		

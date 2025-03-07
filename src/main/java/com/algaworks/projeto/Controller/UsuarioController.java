@@ -32,13 +32,13 @@ public class UsuarioController {
 		return serviceProjeto.GetUsuarios();
 	}
 
-	@PostMapping("/usuario/novo")
+	@PostMapping("/usuarios/novo")
 	public ResponseEntity<UsuarioEntity> CriarUsuario(@RequestBody UsuarioInputDto dto) {
 		UsuarioEntity object = usuarioMapper.toEntity(dto);
 		return serviceProjeto.CadastroUsuario(object);
 	}
 	
-	@DeleteMapping("usuario/{id}")
+	@DeleteMapping("usuarios/{id}")
 	public void DeleteById(@PathVariable UUID id) {
 		 serviceProjeto.DeleteById(id);
 	}
