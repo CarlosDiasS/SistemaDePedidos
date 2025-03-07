@@ -61,23 +61,31 @@ public class ServiceProjetoImpl implements ServiceProjeto {
 		}
 		return aux;
 	}
-	
+
 	@Override
 	public String CodificacaoSha256(String input) {
-		try{
+		try {
 			MessageDigest digest = MessageDigest.getInstance("SHA-256");
 			byte[] hash = digest.digest(input.getBytes());
 			return HexFormat.of().formatHex(hash);
-		}catch (Exception e) {
-			throw new RuntimeException("Erro ao codificar a senha com SHA-256.",e);
+		} catch (Exception e) {
+			throw new RuntimeException("Erro ao codificar a senha com SHA-256.", e);
 		}
 	}
-	
-	//estudar implementação de token, possibilitando o acesso a senha do banco 
-	
+
+	@Override
+	public Boolean VerificarHash(String input, UUID id) {
+		String hashGerado = CodificacaoSha256(input);
+		UsuarioEntity user = usuarioRepository.findById(id)
+				.orElseThrow(() -> new EntityNotFoundException("Usuario nao encontrado."));
+		return hashGerado.equals(user.getSenha());
+	}
+
+	// estudar implementação de token, possibilitando o acesso a senha do banco
+
 	@Override
 	public ResponseEntity<UsuarioEntity> CadastroUsuario(UsuarioEntity usuario) {
-		
+
 		String password = usuario.getSenha();
 		UsuarioEntity novo = new UsuarioEntity();
 		novo.setSenha(CodificacaoSha256(password));

@@ -16,14 +16,16 @@ import com.algaworks.projeto.domain.service.ServiceProjeto;
 import com.algaworks.projeto.model.entity.UsuarioEntity;
 
 import Mappers.UsuarioMapper;
+import dto.ComboBoxUsuarioDto;
 import dto.UsuarioInputDto;
+import jakarta.validation.Valid;
 
 @Controller
 public class UsuarioController {
 
 	@Autowired
 	private ServiceProjeto serviceProjeto;
-	
+
 	@Autowired
 	private UsuarioMapper usuarioMapper;
 
@@ -37,12 +39,15 @@ public class UsuarioController {
 		UsuarioEntity object = usuarioMapper.toEntity(dto);
 		return serviceProjeto.CadastroUsuario(object);
 	}
-	
+
 	@DeleteMapping("usuarios/{id}")
 	public void DeleteById(@PathVariable UUID id) {
-		 serviceProjeto.DeleteById(id);
+		serviceProjeto.DeleteById(id);
 	}
-	
-	
+
+	@GetMapping("/usuarios/senha")
+	public Boolean VerificarSenha(@RequestBody @Valid ComboBoxUsuarioDto dto) {
+		return serviceProjeto.VerificarHash(dto.getSenha(), dto.getId());
+	}
 
 }

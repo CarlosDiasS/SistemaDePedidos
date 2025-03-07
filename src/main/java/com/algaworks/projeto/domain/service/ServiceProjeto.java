@@ -30,5 +30,7 @@ public interface ServiceProjeto {
 	void DeleteById(UUID id);
 
 	FormaPagamentoEntity getFormaPg(UUID id);
+	
+	public Boolean VerificarHash(String input, UUID id);
 
 }
