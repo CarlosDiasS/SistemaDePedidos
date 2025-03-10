@@ -47,22 +47,22 @@ public class RestauranteController {
 
 	@GetMapping("/cozinhas")
 	public List<CozinhaEntity> cozinhas() {
-		return restauranteService.GetCozinhas();
+		return restauranteService.getCozinhas();
 	}
 
 	@GetMapping("/cozinhas/{id}")
 	public CozinhaEntity filtroCozinha(@PathVariable UUID id) {
-		return restauranteService.GetCozinhaById(id);
+		return restauranteService.getCozinhaById(id);
 	}
 
 	@GetMapping("/cozinhas/filtro/{nome}")
-	public CozinhaEntity CozinhaByNome(@PathVariable String nome) {
-		return restauranteService.GetCozinhaByNome(nome);
+	public CozinhaEntity cozinhaByNome(@PathVariable String nome) {
+		return restauranteService.getCozinhaByNome(nome);
 	}
 
 	@DeleteMapping("/cozinha/{id}")
 	public ResponseEntity<Void> removerCozinha(@PathVariable UUID id) {
-		restauranteService.RemoverCozinha(id);
+		restauranteService.removerCozinha(id);
 		return ResponseEntity.noContent().build();
 	}
 
@@ -70,12 +70,12 @@ public class RestauranteController {
 	@Transactional
 	public ResponseEntity<CozinhaEntity> adicionarCozinha(@RequestBody @Valid CozinhaInputDto dto) {
 		CozinhaEntity entity = cozinhaMapper.toEntity(dto);
-		return restauranteService.AdicionarCozinha(entity);
+		return restauranteService.adicionarCozinha(entity);
 	}
 
 	@GetMapping("/restaurantes")
 	public List<RestauranteEntity> listarRestaurantes() {
-		return restauranteService.GetRestaurantes();
+		return restauranteService.getRestaurantes();
 	}
 
 	@GetMapping("/restaurantes/pagamentos/{id}")
@@ -84,8 +84,8 @@ public class RestauranteController {
 	}
 
 	@GetMapping("/restaurantes/{id}")
-	public RestauranteEntity RestauranteById(@PathVariable UUID id) {
-		return restauranteService.GetRestaurante(id);
+	public RestauranteEntity restauranteById(@PathVariable UUID id) {
+		return restauranteService.getRestaurante(id);
 	}
 
 	@PostMapping("/restaurantes/novo")
@@ -95,7 +95,7 @@ public class RestauranteController {
 			RestauranteEntity entity = restauranteMapper.toEntity(dto);
 			entity.setCozinha(filtroCozinha(dto.getCozinhaId()));
 			entity.setFormaPagamento(getFormaPg(dto.getFormaPagamentoId()));
-			RestauranteEntity novoRestaurante = restauranteService.AdicionarRestaurante(entity);
+			RestauranteEntity novoRestaurante = restauranteService.adicionarRestaurante(entity);
 			return ResponseEntity.status(HttpStatus.CREATED).body(novoRestaurante);
 		} catch (IllegalArgumentException e) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
@@ -105,14 +105,14 @@ public class RestauranteController {
 	}
 
 	@PostMapping("/produtos/novo")
-	public ResponseEntity<?> CadastroProduto(@RequestBody @Valid ProdutoInputDto dto) {
+	public ResponseEntity<?> cadastroProduto(@RequestBody @Valid ProdutoInputDto dto) {
 
 		try {
 			ProdutoEntity entity = produtoMapper.toEntity(dto);
 			entity.setAtivo(true);
 			ProdutoEntity novo = restauranteService.adicionarProduto(entity);
 
-			RestauranteEntity aux = RestauranteById(dto.getRestauranteId());
+			RestauranteEntity aux = restauranteById(dto.getRestauranteId());
 			if (aux == null) {
 				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Restaurante não encontrado.");
 			}
@@ -125,7 +125,7 @@ public class RestauranteController {
 
 	@GetMapping("/produtos/{id}")
 	public List<ProdutoEntity> getProdutosByRestaurante(@PathVariable UUID id) {
-		return restauranteService.ProdutosByRestaurante(id);
+		return restauranteService.produtosByRestaurante(id);
 	}
 
 }

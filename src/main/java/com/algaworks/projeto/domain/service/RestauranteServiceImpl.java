@@ -36,43 +36,43 @@ public class RestauranteServiceImpl implements RestauranteService {
 	private ProdutoRepository produtoRepository;
 
 	@Override
-	public List<CozinhaEntity> GetCozinhas() {
+	public List<CozinhaEntity> getCozinhas() {
 		return cozinhaRepository.findAll();
 
 	}
 
 	@Override
-	public List<ProdutoEntity> GetProdutos() {
+	public List<ProdutoEntity> getProdutos() {
 		return produtoRepository.findAll();
 	}
 
 	@Override
-	public List<RestauranteEntity> GetRestaurantes() {
+	public List<RestauranteEntity> getRestaurantes() {
 		return restauranteRepository.findAll();
 
 	}
 
 	@Override
-	public RestauranteEntity GetRestaurante(UUID id) {
+	public RestauranteEntity getRestaurante(UUID id) {
 		return restauranteRepository.findById(id)
 				.orElseThrow(() -> new EntityNotFoundException("Restaurante não encontrado."));
 	}
 
 	@Override
-	public List<FormaPagamentoEntity> GetFormasPg() {
+	public List<FormaPagamentoEntity> getFormasPg() {
 		return formaPagamentoRepository.findAll();
 	}
 
 	@Override
 	@Transactional
-	public ResponseEntity<FormaPagamentoEntity> CadastrarFormaPg(FormaPagamentoEntity formaPg) {
+	public ResponseEntity<FormaPagamentoEntity> cadastrarFormaPg(FormaPagamentoEntity formaPg) {
 		FormaPagamentoEntity aux = formaPagamentoRepository.saveAndFlush(formaPg);
 		return ResponseEntity.status(HttpStatus.CREATED).body(aux);
 	}
 
 	@Override
 	@Transactional
-	public ResponseEntity<CozinhaEntity> AdicionarCozinha(CozinhaEntity cozinhaEntity) {
+	public ResponseEntity<CozinhaEntity> adicionarCozinha(CozinhaEntity cozinhaEntity) {
 		CozinhaEntity novaCozinha = cozinhaRepository.saveAndFlush(cozinhaEntity);
 		System.err.println("Cozinha adicionada: " + novaCozinha.getNome());
 		return ResponseEntity.status(HttpStatus.CREATED).body(novaCozinha);
@@ -85,7 +85,7 @@ public class RestauranteServiceImpl implements RestauranteService {
 	 */
 	@Override
 	@Transactional
-	public RestauranteEntity AdicionarRestaurante(RestauranteEntity entity) throws Exception {
+	public RestauranteEntity adicionarRestaurante(RestauranteEntity entity) throws Exception {
 		if (cozinhaRepository.findById(entity.getCozinha().getId()) == null) {
 			throw new Exception("Cozinha inexistente");
 		}
@@ -96,18 +96,18 @@ public class RestauranteServiceImpl implements RestauranteService {
 	}
 
 	@Override
-	public CozinhaEntity GetCozinhaById(UUID id) {
+	public CozinhaEntity getCozinhaById(UUID id) {
 		return cozinhaRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("cozinha não encontrada"));
 	}
 
 	@Override
-	public CozinhaEntity GetCozinhaByNome(String nome) {
+	public CozinhaEntity getCozinhaByNome(String nome) {
 		return cozinhaRepository.findByNome(nome)
 				.orElseThrow(() -> new EntityNotFoundException("cozinha não encontrada."));
 	}
 
 	@Override
-	public void RemoverCozinha(UUID id) {
+	public void removerCozinha(UUID id) {
 		cozinhaRepository.deleteById(id);
 	}
 
@@ -118,7 +118,7 @@ public class RestauranteServiceImpl implements RestauranteService {
 	}
 
 	@Override
-	public List<ProdutoEntity> ProdutosByRestaurante(UUID restauranteId) {
+	public List<ProdutoEntity> produtosByRestaurante(UUID restauranteId) {
 		try {
 			Optional<RestauranteEntity> restauranteOptional = restauranteRepository.findById(restauranteId);
 

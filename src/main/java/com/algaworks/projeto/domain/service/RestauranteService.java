@@ -12,34 +12,34 @@ import com.algaworks.projeto.model.entity.RestauranteEntity;
 
 public interface RestauranteService {
 
-	List<CozinhaEntity> GetCozinhas();
+	List<CozinhaEntity> getCozinhas();
 
-	List<ProdutoEntity> GetProdutos();
+	List<ProdutoEntity> getProdutos();
 
-	List<RestauranteEntity> GetRestaurantes();
+	List<RestauranteEntity> getRestaurantes();
 
-	RestauranteEntity GetRestaurante(UUID id);
+	RestauranteEntity getRestaurante(UUID id);
 
-	List<FormaPagamentoEntity> GetFormasPg();
+	List<FormaPagamentoEntity> getFormasPg();
 
-	ResponseEntity<FormaPagamentoEntity> CadastrarFormaPg(FormaPagamentoEntity formaPg);
+	ResponseEntity<FormaPagamentoEntity> cadastrarFormaPg(FormaPagamentoEntity formaPg);
 
-	ResponseEntity<CozinhaEntity> AdicionarCozinha(CozinhaEntity cozinhaEntity);
+	ResponseEntity<CozinhaEntity> adicionarCozinha(CozinhaEntity cozinhaEntity);
 
 	/*
 	 * Verifica se a o cozinha e forma pagamento enviados na requisição sao validos
 	 * Logo apos, processa a transação
 	 */
-	RestauranteEntity AdicionarRestaurante(RestauranteEntity entity) throws Exception;
+	RestauranteEntity adicionarRestaurante(RestauranteEntity entity) throws Exception;
 
-	CozinhaEntity GetCozinhaById(UUID id);
+	CozinhaEntity getCozinhaById(UUID id);
 
-	CozinhaEntity GetCozinhaByNome(String nome);
+	CozinhaEntity getCozinhaByNome(String nome);
 
-	void RemoverCozinha(UUID id);
+	void removerCozinha(UUID id);
 
 	ProdutoEntity adicionarProduto(ProdutoEntity entity);
 	
-	public List<ProdutoEntity>ProdutosByRestaurante(UUID restauranteid);
+	public List<ProdutoEntity> produtosByRestaurante(UUID restauranteid);
 
 }

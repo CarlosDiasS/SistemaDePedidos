@@ -38,23 +38,23 @@ public class ServiceProjetoImpl implements ServiceProjeto {
 	private FormaPagamentoRepository formaPagamentoRepository;
 
 	@Override
-	public List<EstadoEntity> GetEstados() {
+	public List<EstadoEntity> getEstados() {
 		return estadoRepository.findAll();
 	}
 
 	@Override
-	public List<UsuarioEntity> GetUsuarios() {
+	public List<UsuarioEntity> getUsuarios() {
 		return usuarioRepository.findAll();
 	}
 
 	@Override
-	public EstadoEntity GetEstadoByNome(String nome) {
+	public EstadoEntity getEstadoByNome(String nome) {
 		return estadoRepository.findByNome(nome)
 				.orElseThrow(() -> new EntityNotFoundException("Estado nao encontrado."));
 	}
 
 	@Override
-	public Optional<CidadeEntity> FindCidadesByEstado(UUID estadoId) {
+	public Optional<CidadeEntity> findCidadesByEstado(UUID estadoId) {
 		Optional<CidadeEntity> aux = cidadeRepository.findByEstadoId(estadoId);
 		if (aux.isEmpty()) {
 			throw new EntityNotFoundException("Nenhuma cidade encontrada para o estado.");
@@ -63,7 +63,7 @@ public class ServiceProjetoImpl implements ServiceProjeto {
 	}
 
 	@Override
-	public String CodificacaoSha256(String input) {
+	public String codificacaoSha256(String input) {
 		try {
 			MessageDigest digest = MessageDigest.getInstance("SHA-256");
 			byte[] hash = digest.digest(input.getBytes());
@@ -74,8 +74,8 @@ public class ServiceProjetoImpl implements ServiceProjeto {
 	}
 
 	@Override
-	public Boolean VerificarHash(String input, UUID id) {
-		String hashGerado = CodificacaoSha256(input);
+	public Boolean verificarHash(String input, UUID id) {
+		String hashGerado = codificacaoSha256(input);
 		UsuarioEntity user = usuarioRepository.findById(id)
 				.orElseThrow(() -> new EntityNotFoundException("Usuario nao encontrado."));
 		return hashGerado.equals(user.getSenha());
@@ -84,11 +84,11 @@ public class ServiceProjetoImpl implements ServiceProjeto {
 	// estudar implementação de token, possibilitando o acesso a senha do banco
 
 	@Override
-	public ResponseEntity<UsuarioEntity> CadastroUsuario(UsuarioEntity usuario) {
+	public ResponseEntity<UsuarioEntity> cadastroUsuario(UsuarioEntity usuario) {
 
 		String password = usuario.getSenha();
 		UsuarioEntity novo = new UsuarioEntity();
-		novo.setSenha(CodificacaoSha256(password));
+		novo.setSenha(codificacaoSha256(password));
 		novo.setDataCadastro(usuario.getDataCadastro());
 		novo.setEmail(usuario.getEmail());
 		novo.setNome(usuario.getNome());
@@ -98,13 +98,13 @@ public class ServiceProjetoImpl implements ServiceProjeto {
 	}
 
 	@Override
-	public UsuarioEntity GetUsuarioByName(String nome) {
+	public UsuarioEntity getUsuarioByName(String nome) {
 		return usuarioRepository.findByNome(nome)
 				.orElseThrow(() -> new EntityNotFoundException("Usuario nao encontrado"));
 	}
 
 	@Override
-	public void DeleteById(UUID id) {
+	public void deleteById(UUID id) {
 		usuarioRepository.deleteById(id);
 	}
 
@@ -115,7 +115,7 @@ public class ServiceProjetoImpl implements ServiceProjeto {
 	}
 
 	@Override
-	public ResponseEntity<FormaPagamentoEntity> CadastrarFormaPg(String pg) {
+	public ResponseEntity<FormaPagamentoEntity> cadastrarFormaPg(String pg) {
 
 		FormaPagamentoEntity aux = new FormaPagamentoEntity();
 		aux.setDescricao(pg);

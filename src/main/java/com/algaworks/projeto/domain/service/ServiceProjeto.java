@@ -13,26 +13,26 @@ import com.algaworks.projeto.model.entity.UsuarioEntity;
 
 public interface ServiceProjeto {
 
-	List<EstadoEntity> GetEstados();
+	List<EstadoEntity> getEstados();
 
-	List<UsuarioEntity> GetUsuarios();
+	List<UsuarioEntity> getUsuarios();
 
-	EstadoEntity GetEstadoByNome(String nome);
+	EstadoEntity getEstadoByNome(String nome);
 
-	Optional<CidadeEntity> FindCidadesByEstado(UUID estadoId);
+	Optional<CidadeEntity> findCidadesByEstado(UUID estadoId);
 
-	String CodificacaoSha256(String input);
+	String codificacaoSha256(String input);
 
-	ResponseEntity<UsuarioEntity> CadastroUsuario(UsuarioEntity usuario);
+	ResponseEntity<UsuarioEntity> cadastroUsuario(UsuarioEntity usuario);
 
-	UsuarioEntity GetUsuarioByName(String nome);
+	UsuarioEntity getUsuarioByName(String nome);
 
-	void DeleteById(UUID id);
+	void deleteById(UUID id);
 
 	FormaPagamentoEntity getFormaPg(UUID id);
 
-	public Boolean VerificarHash(String input, UUID id);
+	public Boolean verificarHash(String input, UUID id);
 
-	ResponseEntity<FormaPagamentoEntity> CadastrarFormaPg(String pg);
+	ResponseEntity<FormaPagamentoEntity> cadastrarFormaPg(String pg);
 
 }

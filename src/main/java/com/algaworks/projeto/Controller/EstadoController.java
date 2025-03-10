@@ -20,12 +20,12 @@ public class EstadoController {
 	private ServiceProjeto serviceProjeto;
 
 	@GetMapping("/estados")
-	public List<EstadoEntity> GetEstados() {
+	public List<EstadoEntity> getEstados() {
 		return serviceProjeto.GetEstados();
 	}
 
 	@GetMapping("/estados/{id}")
-	public Optional<CidadeEntity> GetCidadesPorEstado(@RequestParam UUID estadoId) {
+	public Optional<CidadeEntity> getCidadesPorEstado(@RequestParam UUID estadoId) {
 		return serviceProjeto.FindCidadesByEstado(estadoId);
 	}
 	

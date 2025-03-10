@@ -31,29 +31,29 @@ public class UsuarioController {
 	private UsuarioMapper usuarioMapper;
 
 	@GetMapping("/usuarios")
-	public List<UsuarioEntity> GetUsuarios() {
-		return serviceProjeto.GetUsuarios();
+	public List<UsuarioEntity> getUsuarios() {
+		return serviceProjeto.getUsuarios();
 	}
 
 	@PostMapping("/usuarios/novo")
-	public ResponseEntity<UsuarioEntity> CriarUsuario(@RequestBody UsuarioInputDto dto) {
+	public ResponseEntity<UsuarioEntity> criarUsuario(@RequestBody UsuarioInputDto dto) {
 		UsuarioEntity object = usuarioMapper.toEntity(dto);
-		return serviceProjeto.CadastroUsuario(object);
+		return serviceProjeto.cadastroUsuario(object);
 	}
 
 	@DeleteMapping("usuarios/{id}")
-	public void DeleteById(@PathVariable UUID id) {
-		serviceProjeto.DeleteById(id);
+	public void deleteById(@PathVariable UUID id) {
+		serviceProjeto.deleteById(id);
 	}
 
 	@GetMapping("/usuarios/senha")
-	public Boolean VerificarSenha(@RequestBody @Valid ComboBoxUsuarioDto dto) {
-		return serviceProjeto.VerificarHash(dto.getSenha(), dto.getId());
+	public Boolean verificarSenha(@RequestBody @Valid ComboBoxUsuarioDto dto) {
+		return serviceProjeto.verificarHash(dto.getSenha(), dto.getId());
 	}
 	
 	@PostMapping("/forma-pagamento/novo/{pg}")
-	public ResponseEntity<FormaPagamentoEntity> CriarFormaPg(@PathVariable String pg ){
-		return serviceProjeto.CadastrarFormaPg(pg);
+	public ResponseEntity<FormaPagamentoEntity> criarFormaPg(@PathVariable String pg ){
+		return serviceProjeto.cadastrarFormaPg(pg);
 		
 	}
 	
